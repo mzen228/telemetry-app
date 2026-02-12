@@ -1,5 +1,7 @@
 import os
+import signal
 import socket
+import sys
 import time
 import random
 
@@ -9,7 +11,19 @@ SEND_INTERVAL = float(os.getenv("SEND_INTERVAL", "1"))
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-while True:
+running = True
+
+def shutdown_handler(signum, frame):
+    global running
+    print("\nShutdown signal received.  Cleaning up...")
+    running = False
+
+signal.signal(signal.SIGTERM, shutdown_handler)
+signal.signal(signal.SIGINT, shutdown_handler)
+
+print(f"Sending to {TARGET_HOST}: {TARGET_PORT} every {SEND_INTERVAL} seconds")
+
+while running:
     altitude_ft = random.randint(0, 40000)
     airspeed_kts = random.randint(100, 600)
     temperature_c = random.randint(-50, 40)
@@ -21,3 +35,7 @@ while True:
     print(f"Sent: {message}")
 
     time.sleep(SEND_INTERVAL)
+
+sock.close()
+print("Sender shutdown complete.")
+sys.exit(0)
