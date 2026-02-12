@@ -1,7 +1,8 @@
+import os
 import socket
 
-HOST = "0.0.0.0"
-PORT = 5005
+HOST = os.getenv("LISTEN_HOST", "0.0.0.0")
+PORT = int(os.getenv("LISTEN_PORT", "5005"))
 
 sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 sock.bind((HOST, PORT))
