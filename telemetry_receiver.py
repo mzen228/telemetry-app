@@ -16,6 +16,19 @@ def shutdown_handler(signum, frame):
     print("\nShutdown signal received.  Cleaning up...")
     running = False
 
+def parse_message(s):
+    parts = s.split(",")
+    altitude_part = parts[0]
+    airspeed_part = parts[1]
+    temperature_part = parts[2]
+
+    altitude_ft = int(altitude_part.split("=")[1])
+    airspeed_kts = int(airspeed_part.split("=")[1])
+    temperature_c = int(temperature_part.split("=")[1])
+
+    return altitude_ft, airspeed_kts, temperature_c
+
+
 signal.signal(signal.SIGTERM, shutdown_handler)
 signal.signal(signal.SIGINT, shutdown_handler)
 
@@ -27,15 +40,13 @@ while running:
         data, addr = sock.recvfrom(1024)
     except socket.timeout:
         continue
-        
+
     message = data.decode("utf-8")
 
     print(f"Received from {addr}: {message}")
 
     try:
-        parts = message.split(",")
-        altitude_part = parts[0]
-        altitude_ft = int(altitude_part.split("=")[1])
+        altitude_ft, _, _ = parse_message(message)
 
         if altitude_ft < 0:
             print("Invalid altitude")
