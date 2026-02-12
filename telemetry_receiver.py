@@ -11,10 +11,12 @@ sock.bind((HOST, PORT))
 
 running = True
 
+
 def shutdown_handler(signum, frame):
     global running
     print("\nShutdown signal received.  Cleaning up...")
     running = False
+
 
 def parse_message(s):
     parts = s.split(",")

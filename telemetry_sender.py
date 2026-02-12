@@ -13,10 +13,12 @@ sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
 running = True
 
+
 def shutdown_handler(signum, frame):
     global running
     print("\nShutdown signal received.  Cleaning up...")
     running = False
+
 
 signal.signal(signal.SIGTERM, shutdown_handler)
 signal.signal(signal.SIGINT, shutdown_handler)
