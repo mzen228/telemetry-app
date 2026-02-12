@@ -17,9 +17,9 @@ while True:
     try:
         parts = message.split(",")
         altitude_part = parts[0]
-        altitude = int(altitude_part.split("=")[1])
+        altitude_ft = int(altitude_part.split("=")[1])
 
-        if altitude < 0:
+        if altitude_ft < 0:
             print("Invalid altitude")
         else:
             print("Valid message")
