@@ -35,7 +35,8 @@ jobs:
         uses: aquasecurity/trivy-action@0.20.0
         with:
           image-ref: telemetry-app
-          format: table
+          format: json
+          output: trivy-report.json
           exit-code: 1
           ignore-unfixed: true
           vuln-type: 'os,library'
