@@ -1,5 +1,10 @@
 version: "3.8"
 
+x-secure-defaults: &secure-defaults
+  cap_drop:
+    - ALL
+  read_only: true
+
 services:
   receiver:
     build: .
@@ -10,8 +15,7 @@ services:
       - LISTEN_PORT=5005
     ports:
       - "5005:5005"
-    cap_drop:
-      - ALL
+    <<: *secure-defaults
 
   sender:
     build: .
@@ -23,5 +27,4 @@ services:
       - SEND_INTERVAL=1
     depends_on:
       - receiver
-    cap_drop:
-      - ALL
+    <<: *secure-defaults
