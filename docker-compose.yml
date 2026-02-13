@@ -1,0 +1,23 @@
+version: "3.8"
+
+services:
+  receiver:
+    build: .
+    container_name: telemetry-receiver
+    command: python -u telemetry_receiver.py
+    environment:
+      - LISTEN_HOST=0.0.0.0
+      - LISTEN_PORT=5005
+    ports:
+      - "5005:5005"
+
+  sender:
+    build: .
+    container_name: telemetry-sender
+    command: python -u telemetry_sender.py
+    environment:
+      - TARGET_HOST=receiver
+      - TARGET_PORT=5005
+      - SEND_INTERVAL=1
+    depends_on:
+      - receiver
