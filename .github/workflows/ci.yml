@@ -43,6 +43,7 @@ jobs:
           severity: 'CRITICAL,HIGH'
 
       - name: Upload Trivy report artifact
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: trivy-report
