@@ -30,7 +30,8 @@ while running:
     airspeed_kts = random.randint(100, 600)
     temperature_c = random.randint(-50, 40)
 
-    message = f"ALT_FT={altitude_ft},AIRSPEED_KTS={airspeed_kts},TEMP_C={temperature_c}"
+    message = (f"ALT_FT={altitude_ft},AIRSPEED_KTS={airspeed_kts},"
+               f"TEMP_C={temperature_c}")
 
     sock.sendto(message.encode("utf-8"), (TARGET_HOST, TARGET_PORT))
 
