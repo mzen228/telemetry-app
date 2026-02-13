@@ -10,6 +10,8 @@ services:
       - LISTEN_PORT=5005
     ports:
       - "5005:5005"
+    cap_drop:
+      - ALL
 
   sender:
     build: .
@@ -21,3 +23,5 @@ services:
       - SEND_INTERVAL=1
     depends_on:
       - receiver
+    cap_drop:
+      - ALL
