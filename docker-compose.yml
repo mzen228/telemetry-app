@@ -4,6 +4,8 @@ x-secure-defaults: &secure-defaults
   cap_drop:
     - ALL
   read_only: true
+  security_opt:
+    - no-new-privileges:true
 
 services:
   receiver:
