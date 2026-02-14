@@ -8,6 +8,7 @@ x-secure-defaults: &secure-defaults
     - no-new-privileges:true
   mem_limit: 128m
   cpus: 0.5
+  pids_limit: 50
 
 services:
   receiver:
