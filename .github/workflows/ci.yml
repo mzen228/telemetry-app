@@ -74,4 +74,4 @@ jobs:
         uses: sigstore/cosign-installer@v3
 
       - name: Sign image (keyless)
-        uses: cosign sign --yes ${{ github.repository }}:latest
+        uses: cosign sign --yes ghcr.io/${{ github.repository }}:latest
