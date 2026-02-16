@@ -75,3 +75,11 @@ jobs:
 
       - name: Sign image (keyless)
         run: cosign sign --yes ghcr.io/${{ github.repository }}:latest
+
+      - name: Attach SBOM attestation
+        run: |
+          cosign attest \
+          --predicate sbom.json \
+          --type cyclonedx \
+          --yes \
+          ghcr.io/${{ github.repository }}:latest
