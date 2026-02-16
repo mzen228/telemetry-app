@@ -1,3 +1,6 @@
 venv/
 .gitignore
 .idea/
+*.zip
+*.deb
+*.json
