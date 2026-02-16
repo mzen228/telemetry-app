@@ -77,15 +77,22 @@ jobs:
       - name: Sign image (keyless)
         run: cosign sign --yes ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }}
 
-      - name: Install Trivy
-        uses: aquasecurity/setup-trivy@v0.2.0
+#      - name: Install Trivy
+#        uses: aquasecurity/setup-trivy@v0.2.0
 
-      - name: Generate SBOM
-        run: |
-          trivy image \
-          --format cyclonedx \
-          --output sbom.json \
-          ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }} 
+#      - name: Generate SBOM
+#        run: |
+#          trivy image \
+#          --format cyclonedx \
+#          --output sbom.json \
+#          ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }}
+
+      - name: Generate SBO
+        uses: aquasecurity/trivy-action@0.20.0
+        with:
+          image-ref: ghcr.io/${{ github.repository }}@${{ steps.build.outputs.digest }}
+          format: 'cyclonedx'
+          output: 'sbom.json'
 
       - name: Attach SBOM attestation
         run: |
